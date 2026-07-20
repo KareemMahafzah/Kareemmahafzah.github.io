@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        nav {
+            background-color: #2c3e50;
+            padding: 15px;
+        }
+
+            nav a {
+                color: white;
+                text-decoration: none;
+                margin: 0 15px;
+                font-weight: bold;
+            }
+
+                nav a:hover {
+                    text-decoration: underline;
+                }
+        section {
+            margin-top: 50px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+
+        button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #34495e;
+            }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        p {
+            color: #555;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Requests</a>
+        <a href="#">Reports</a>
+        <a href="#">Contact</a>
+    </nav>
+    <h1>Maintenance Project</h1>
+    <p>Welcome to your maintenance management site.</p>
+    <section id="requests">
+        <h2>Submit a Maintenance Request</h2>
+        <form>
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="issue">Issue Description:</label><br>
+            <textarea id="issue" name="issue" rows="4" cols="50" required></textarea><br><br>
+
+            <label for="priority">Priority:</label><br>
+            <select id="priority" name="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select><br><br>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    </section>
+    <script>const form = document.querySelector("form");
+  form.addEventListener("submit", function(event) {
+    event.preventDefault(); // stop page reload
+    const name = document.getElementById("name").value;
+    const issue = document.getElementById("issue").value;
+    const priority = document.getElementById("priority").value;
+
+    const result = document.createElement("p");
+    result.textContent = `Request submitted by ${name} — Issue: "${issue}" (Priority: ${priority})`;
+    document.body.appendChild(result);
+    form.reset();
+  });</script>
+</body>
+</html>
