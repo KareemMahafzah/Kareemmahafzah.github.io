@@ -1,0 +1,40 @@
+@model MaintenanceProject.Models.MaintenanceRequestEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Request";
+}
+
+<h1>Edit Request</h1>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RequestDate" class="control-label"></label>
+        <input asp-for="RequestDate" class="form-control" type="date" />
+        <span asp-validation-for="RequestDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <input asp-for="IsCompleted" class="form-check-input" />
+        <label asp-for="IsCompleted" class="form-check-label"></label>
+    </div>
+
+    <div class="mt-3">
+        <input type="submit" value="Save Changes" class="btn btn-success" />
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

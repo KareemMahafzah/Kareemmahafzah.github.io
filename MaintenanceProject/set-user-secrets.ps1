@@ -1,0 +1,16 @@
+# Run this script from the repository root to initialize and set user secrets for the MaintenanceProject
+# Requires the dotnet CLI to be installed and available on PATH.
+# Usage: .\MaintenanceProject\set-user-secrets.ps1 -ConnectionString "Server=(localdb)\\mssqllocaldb;Database=MaintenanceDB;Trusted_Connection=True;"
+param(
+	[Parameter(Mandatory=$true)]
+	[string]$ConnectionString
+)
+
+Push-Location MaintenanceProject
+Write-Host "Initializing user secrets for the project..."
+# Initializes user secrets if not already initialized
+dotnet user-secrets init | Out-Null
+Write-Host "Setting ConnectionStrings:DefaultConnection..."
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "$ConnectionString" | Out-Null
+Write-Host "Done."
+Pop-Location

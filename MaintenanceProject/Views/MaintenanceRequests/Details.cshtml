@@ -1,0 +1,30 @@
+@model MaintenanceProject.Models.MaintenanceRequest
+
+@{
+    ViewData["Title"] = "Request Details";
+}
+
+<h1>Request Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Description</h5>
+        <p class="card-text">
+            <strong>Request Date:</strong> @Model.RequestDate.ToString("dd/MM/yyyy") <br />
+            <strong>Status:</strong>
+            @if (Model.IsCompleted)
+            {
+                <span class="badge bg-success">Completed</span>
+            }
+            else
+            {
+                <span class="badge bg-danger">Pending</span>
+            }
+        </p>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

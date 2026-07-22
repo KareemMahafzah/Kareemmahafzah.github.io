@@ -1,0 +1,26 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build
+bin/
+obj/
+
+# User secrets
+secrets.json
+
+# Rider
+.idea/
+
+# ASP.NET
+wwwroot/lib/
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# Mac
+.DS_Store

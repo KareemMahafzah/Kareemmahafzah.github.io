@@ -1,0 +1,24 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.x'
+    - name: Restore
+      run: dotnet restore MaintenanceProject/MaintenanceProject.slnx
+    - name: Build
+      run: dotnet build MaintenanceProject/MaintenanceProject.slnx --configuration Release --no-restore
+    - name: Test
+      run: dotnet test MaintenanceProject.Tests/MaintenanceProject.Tests.csproj --configuration Release --no-build --verbosity normal
