@@ -19,10 +19,9 @@ public class MaintenanceRequestsController : Controller
     }
 
     // GET: MAINTENANCEREQUESTS
-    public async Task<IActionResult> Index(string? search, int page = 1)
+    public async Task<IActionResult> Index(string? search, int page = 1, int pageSize = 10, string? sortBy = "date", string? sortDir = "desc")
     {
-        const int pageSize = 10;
-        _logger.LogInformation("Fetching maintenance requests (search={Search}, page={Page})", search, page);
+        _logger.LogInformation("Fetching maintenance requests (search={Search}, page={Page}, pageSize={PageSize}, sort={SortBy} {SortDir})", search, page, pageSize, sortBy, sortDir);
 
         var query = _context.MaintenanceRequests.AsQueryable();
         if (!string.IsNullOrWhiteSpace(search))
@@ -30,11 +29,26 @@ public class MaintenanceRequestsController : Controller
             query = query.Where(r => r.Description.Contains(search));
         }
 
+        // Apply sorting
+        bool descending = string.Equals(sortDir, "desc", StringComparison.OrdinalIgnoreCase);
+        switch ((sortBy ?? "date").ToLowerInvariant())
+        {
+            case "description":
+                query = descending ? query.OrderByDescending(r => r.Description) : query.OrderBy(r => r.Description);
+                break;
+            case "completed":
+                query = descending ? query.OrderByDescending(r => r.IsCompleted) : query.OrderBy(r => r.IsCompleted);
+                break;
+            case "date":
+            default:
+                query = descending ? query.OrderByDescending(r => r.RequestDate) : query.OrderBy(r => r.RequestDate);
+                break;
+        }
+
         var total = await query.CountAsync();
-        var totalPages = (int)System.Math.Ceiling(total / (double)pageSize);
+        var totalPages = (int)System.Math.Ceiling((double)total / Math.Max(1, pageSize));
 
         var items = await query
-            .OrderByDescending(r => r.RequestDate)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -45,6 +59,11 @@ public class MaintenanceRequestsController : Controller
             SearchTerm = search,
             Page = page,
             TotalPages = totalPages
+            ,
+            SortBy = sortBy,
+            SortDir = sortDir
+            ,
+            PageSize = pageSize
         };
 
         return View("Index", vm);
@@ -200,7 +219,30 @@ public class MaintenanceRequestsController : Controller
             _logger.LogInformation("Deleted maintenance request with id {Id}", id);
         }
 
+        // If the request is AJAX, return JSON so client can handle without full reload
+        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        {
+            return Json(new { success = true, id });
+        }
+
         return RedirectToAction(nameof(Index));
+    }
+
+    // POST: MAINTENANCEREQUESTS/DeleteAjax/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteAjax(int id)
+    {
+        var maintenancerequest = await _context.MaintenanceRequests.FindAsync(id);
+        if (maintenancerequest == null)
+        {
+            return Json(new { success = false, message = "Not found" });
+        }
+
+        _context.MaintenanceRequests.Remove(maintenancerequest);
+        await _context.SaveChangesAsync();
+        _logger.LogInformation("Deleted maintenance request with id {Id} via AJAX", id);
+        return Json(new { success = true, id });
     }
 
     private bool MaintenanceRequestExists(int? id)

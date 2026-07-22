@@ -21,6 +21,18 @@ body {
   margin-bottom: 60px;
 }
 
+table.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.badge {
+  font-size: 0.85em;
+}
+
+.card-header .btn {
+  padding: 0.25rem 0.5rem;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
