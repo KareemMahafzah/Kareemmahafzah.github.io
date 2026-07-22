@@ -111,6 +111,8 @@ public class MaintenanceRequestsController : Controller
             _context.Add(maintenancerequest);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Created maintenance request with id {Id}", maintenancerequest.Id);
+            TempData["ToastMessage"] = "Maintenance request created.";
+            TempData["ToastType"] = "success";
             return RedirectToAction(nameof(Index));
         }
 
@@ -169,6 +171,8 @@ public class MaintenanceRequestsController : Controller
                 _context.Update(entity);
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Updated maintenance request with id {Id}", vm.Id);
+                TempData["ToastMessage"] = "Maintenance request updated.";
+                TempData["ToastType"] = "success";
             }
             catch (DbUpdateConcurrencyException ex)
             {
@@ -214,9 +218,11 @@ public class MaintenanceRequestsController : Controller
         var maintenancerequest = await _context.MaintenanceRequests.FindAsync(id);
         if (maintenancerequest != null)
         {
-            _context.MaintenanceRequests.Remove(maintenancerequest);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Deleted maintenance request with id {Id}", id);
+                _context.MaintenanceRequests.Remove(maintenancerequest);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Deleted maintenance request with id {Id}", id);
+                TempData["ToastMessage"] = "Maintenance request deleted.";
+                TempData["ToastType"] = "success";
         }
 
         // If the request is AJAX, return JSON so client can handle without full reload
