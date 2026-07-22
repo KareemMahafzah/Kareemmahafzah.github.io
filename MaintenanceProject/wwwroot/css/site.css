@@ -52,7 +52,7 @@ table.table tbody tr:hover {
 
 body {
   background: linear-gradient(180deg, #08101a 0%, #07101a 100%);
-  color: #e6eef8;
+  color: #f6fbff; /* brighter text for readability */
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 

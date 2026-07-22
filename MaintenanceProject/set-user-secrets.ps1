@@ -12,5 +12,11 @@ Write-Host "Initializing user secrets for the project..."
 dotnet user-secrets init | Out-Null
 Write-Host "Setting ConnectionStrings:DefaultConnection..."
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "$ConnectionString" | Out-Null
+Write-Host "Optionally set admin user email and password?"
+if ($env:ADMIN_EMAIL -and $env:ADMIN_PASSWORD) {
+	Write-Host "Setting AdminUser:Email and AdminUser:Password from environment variables..."
+	dotnet user-secrets set "AdminUser:Email" "$env:ADMIN_EMAIL" | Out-Null
+	dotnet user-secrets set "AdminUser:Password" "$env:ADMIN_PASSWORD" | Out-Null
+}
 Write-Host "Done."
 Pop-Location

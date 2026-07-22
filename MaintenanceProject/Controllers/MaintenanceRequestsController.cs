@@ -5,6 +5,7 @@ using MaintenanceProject.Models;
 using AutoMapper;
 using MaintenanceProject.Data;
 
+[Microsoft.AspNetCore.Authorization.Authorize]
 public class MaintenanceRequestsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -19,6 +20,7 @@ public class MaintenanceRequestsController : Controller
     }
 
     // GET: MAINTENANCEREQUESTS
+    [Microsoft.AspNetCore.Authorization.AllowAnonymous]
     public async Task<IActionResult> Index(string? search, int page = 1, int pageSize = 10, string? sortBy = "date", string? sortDir = "desc")
     {
         _logger.LogInformation("Fetching maintenance requests (search={Search}, page={Page}, pageSize={PageSize}, sort={SortBy} {SortDir})", search, page, pageSize, sortBy, sortDir);
@@ -70,6 +72,7 @@ public class MaintenanceRequestsController : Controller
     }
 
     // GET: MAINTENANCEREQUESTS/Details/5
+    [Microsoft.AspNetCore.Authorization.AllowAnonymous]
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -193,6 +196,7 @@ public class MaintenanceRequestsController : Controller
     }
 
     // GET: MAINTENANCEREQUESTS/Delete/5
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -213,6 +217,7 @@ public class MaintenanceRequestsController : Controller
     // POST: MAINTENANCEREQUESTS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var maintenancerequest = await _context.MaintenanceRequests.FindAsync(id);
@@ -237,6 +242,7 @@ public class MaintenanceRequestsController : Controller
     // POST: MAINTENANCEREQUESTS/DeleteAjax/5
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteAjax(int id)
     {
         var maintenancerequest = await _context.MaintenanceRequests.FindAsync(id);

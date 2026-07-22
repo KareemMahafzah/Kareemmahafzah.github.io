@@ -37,6 +37,25 @@
                         </li>
 
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @User.Identity.Name
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a></li>
+                                    <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post" class="d-none">@Html.AntiForgeryToken()</form>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link text-light" asp-controller="Account" asp-action="Login">Login</a></li>
+                            <li class="nav-item"><a class="nav-link text-light" asp-controller="Account" asp-action="Register">Register</a></li>
+                        }
+                    </ul>
                 </div>
             </div>
         </nav>
