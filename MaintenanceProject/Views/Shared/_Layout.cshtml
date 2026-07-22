@@ -11,9 +11,15 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MaintenanceProject</a>
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" class="me-2" aria-hidden="true">
+                        <path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" fill="currentColor" opacity="0.9"/>
+                        <path d="M19.4 15a7.5 7.5 0 000-6l1.8-1.4L20 4.6 18.2 6a7.5 7.5 0 00-6-.9L10.4 3 9 5l1.8 1.6a7.5 7.5 0 00-.9 6L5 14l1.2 2.9 1.8-1.4a7.5 7.5 0 006 .9L17 21l2-1.6-1.6-2.4z" fill="currentColor" opacity="0.6"/>
+                    </svg>
+                    <span>MaintenanceProject</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,6 +41,18 @@
             </div>
         </nav>
     </header>
+    <div class="container mt-4">
+        <div class="hero mb-4 p-4 rounded-3" style="background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-1" style="font-family: 'Consolas', monospace; color: var(--eng-accent);">Facility Maintenance Dashboard</h1>
+                    <p class="mb-0 text-muted">Track and manage maintenance requests efficiently — engineering style.</p>
+                </div>
+                <div>
+                    <a asp-action="Create" asp-controller="MaintenanceRequests" class="btn btn-primary">New Request</a>
+                </div>
+            </div>
+        </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

@@ -41,3 +41,69 @@ table.table tbody tr:hover {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Engineering theme variables */
+:root {
+  --eng-bg: #0f1724; /* dark slate */
+  --eng-surface: #111827; /* surface */
+  --eng-accent: #ff7a18; /* orange accent */
+  --eng-muted: #94a3b8;
+}
+
+body {
+  background: linear-gradient(180deg, #08101a 0%, #07101a 100%);
+  color: #e6eef8;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.navbar, .footer {
+  background-color: var(--eng-surface);
+}
+
+.navbar-brand {
+  font-family: "Consolas", "Courier New", monospace;
+  font-weight: 700;
+  color: var(--eng-accent) !important;
+}
+
+.card {
+  background-color: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.card-header {
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--eng-accent);
+  font-family: "Consolas", "Courier New", monospace;
+}
+
+.btn-primary {
+  background-color: var(--eng-accent);
+  border-color: var(--eng-accent);
+}
+
+.btn-outline-primary {
+  color: var(--eng-accent);
+  border-color: rgba(255,255,255,0.08);
+}
+
+table.table {
+  color: #cfe8ff;
+}
+
+/* small adjustments for inputs */
+.form-control, .form-select {
+  background-color: rgba(255,255,255,0.02);
+  color: #e6eef8;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.badge.bg-warning.text-dark {
+  background-color: #f59e0b;
+  color: #111827;
+}
+
+.badge.bg-success {
+  background-color: #10b981;
+}

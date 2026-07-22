@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add MVC support
 builder.Services.AddControllersWithViews();
+// Health checks
+builder.Services.AddHealthChecks();
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -40,6 +42,25 @@ app.UseSecurityHeaders();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+
+// health endpoint
+app.MapHealthChecks("/health");
+
+// Apply pending EF migrations at startup (safe-guarded)
+try
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetService<MaintenanceProject.Data.ApplicationDbContext>();
+    if (db != null)
+    {
+        db.Database.Migrate();
+    }
+}
+catch (Exception ex)
+{
+    var logger = app.Services.GetService<ILogger<Program>>();
+    logger?.LogError(ex, "An error occurred while migrating or initializing the database.");
+}
 
 app.MapControllerRoute(
     name: "default",
